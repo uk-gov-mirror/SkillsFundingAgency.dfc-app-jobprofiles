@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DFC.App.JobProfile.Data.Models;
+using DFC.App.JobProfile.MessageFunctionApp.Extensions;
 using DFC.App.JobProfile.MessageFunctionApp.HttpClientPolicies;
 using DFC.App.JobProfile.MessageFunctionApp.Services;
 using DFC.Functions.DI.Standard;
@@ -32,6 +33,26 @@ namespace DFC.App.JobProfile.MessageFunctionApp.Startup
             builder?.Services.AddSingleton<IMessageProcessor, MessageProcessor>();
             builder?.Services.AddSingleton<ILogger, Logger<JobProfileModel>>();
             builder?.Services.AddSingleton<IHttpClientService<JobProfileModel>, HttpClientService<JobProfileModel>>();
+            builder?.Services.AddSingleton<IRefreshHttpClientService, RefreshHttpClientService>();
+
+            AddPollyConfiguration(builder.Services, configuration);
+        }
+
+        private void AddPollyConfiguration(IServiceCollection services, IConfigurationRoot configuration)
+        {
+            const string AppSettingsRefreshPolicies = "RefreshPolicies";
+            const string AppSettingsPolicies = "Policies";
+            var refreshPolicyOptions = configuration.GetSection(AppSettingsRefreshPolicies).Get<PolicyOptions>();
+            //var policyOptions = configuration.GetSection(AppSettingsPolicies).Get<PolicyOptions>();
+            var policyRegistry = services.AddPolicyRegistry();
+
+            services
+                .AddPolicies(policyRegistry, nameof(JobProfileClientOptions), refreshPolicyOptions)
+                .AddHttpClient<IRefreshHttpClientService, RefreshHttpClientService, JobProfileClientOptions>(configuration, nameof(JobProfileClientOptions), nameof(PolicyOptions.HttpRetry), nameof(PolicyOptions.HttpCircuitBreaker));
+
+            //services
+            //    .AddPolicies(policyRegistry, nameof(JobProfileClientOptions), policyOptions)
+            //    .AddHttpClient<IHttpClientService<JobProfileClientOptions>, HttpClientService<JobProfileClientOptions>, JobProfileClientOptions>(configuration, nameof(JobProfileClientOptions), nameof(PolicyOptions.HttpRetry), nameof(PolicyOptions.HttpCircuitBreaker));
         }
     }
 }

@@ -12,5 +12,25 @@
   "jobProfileClientOptions": {
     "Timeout": "00:00:10",
     "BaseAddress": "https://localhost"
+  },
+  "Policies": {
+    "HttpCircuitBreaker": {
+      "DurationOfBreak": "00:01:00",
+      "ExceptionsAllowedBeforeBreaking": 3
+    },
+    "HttpRetry": {
+      "BackoffPower": 2,
+      "Count": 3
+    }
+  },
+  "RefreshPolicies": {
+    "HttpCircuitBreaker": {
+      "DurationOfBreak": "00:00:02",
+      "ExceptionsAllowedBeforeBreaking": 3
+    },
+    "HttpRetry": {
+      "BackoffPower": 2,
+      "Count": 3
+    }
   }
 }

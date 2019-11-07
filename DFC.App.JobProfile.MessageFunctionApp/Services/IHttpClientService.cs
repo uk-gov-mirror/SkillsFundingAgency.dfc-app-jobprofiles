@@ -10,7 +10,7 @@ namespace DFC.App.JobProfile.MessageFunctionApp.Services
     {
         Task<TModel> GetByIdAsync(Guid id);
 
-        Task<HttpStatusCode> PostAsync<TInput>(TInput postModel, string postEndpoint = "profile")
+        Task<HttpStatusCode> PostAsync<TInput>(TInput postModel)
             where TInput : BaseJobProfile;
 
         Task<HttpStatusCode> DeleteAsync(Guid id);

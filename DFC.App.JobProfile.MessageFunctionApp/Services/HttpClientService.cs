@@ -86,7 +86,7 @@ namespace DFC.App.JobProfile.MessageFunctionApp.Services
             return response.StatusCode;
         }
 
-        public async Task<HttpStatusCode> PostAsync<TInput>(TInput postModel, string postEndpoint)
+        public async Task<HttpStatusCode> PostAsync<TInput>(TInput postModel)
             where TInput : BaseJobProfile
         {
             if (postModel is null)
@@ -94,7 +94,7 @@ namespace DFC.App.JobProfile.MessageFunctionApp.Services
                 throw new ArgumentNullException(nameof(postModel));
             }
 
-            var url = new Uri($"{jobProfileClientOptions.BaseAddress}{postEndpoint}");
+            var url = new Uri($"{jobProfileClientOptions.BaseAddress}profile");
             using (var content = new ObjectContent<TInput>(postModel, new JsonMediaTypeFormatter(), MediaTypeNames.Application.Json))
             {
                 var response = await httpClient.PostAsync(url, content).ConfigureAwait(false);
