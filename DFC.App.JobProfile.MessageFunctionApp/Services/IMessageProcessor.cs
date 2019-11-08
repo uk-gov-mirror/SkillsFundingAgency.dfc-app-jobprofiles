@@ -1,8 +1,4 @@
-﻿using Microsoft.Azure.ServiceBus;
-using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Text;
+﻿using System.Net;
 using System.Threading.Tasks;
 
 namespace DFC.App.JobProfile.MessageFunctionApp.Services
@@ -11,6 +7,6 @@ namespace DFC.App.JobProfile.MessageFunctionApp.Services
     {
         Task<HttpStatusCode> ProcessSitefinityMessageAsync(string message, string messageAction, string messageCtype, string messageContentId, long sequenceNumber);
 
-        Task<HttpStatusCode> ProcessSegmentRefresEventAsync(string eventData, long sequenceNumber);
+        Task<HttpStatusCode> ProcessSegmentRefreshEventAsync(string eventData, long sequenceNumber);
     }
 }

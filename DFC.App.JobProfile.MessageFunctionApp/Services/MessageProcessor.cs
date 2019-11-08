@@ -23,7 +23,7 @@ namespace DFC.App.JobProfile.MessageFunctionApp.Services
             this.log = log;
         }
 
-        public async Task<HttpStatusCode> ProcessSegmentRefresEventAsync(string eventData, long sequenceNumber)
+        public async Task<HttpStatusCode> ProcessSegmentRefreshEventAsync(string eventData, long sequenceNumber)
         {
             if (string.IsNullOrWhiteSpace(eventData))
             {
@@ -36,11 +36,11 @@ namespace DFC.App.JobProfile.MessageFunctionApp.Services
             var result = await httpClientService.PostAsync(refreshPayload, "refresh").ConfigureAwait(false);
             if (result == HttpStatusCode.OK)
             {
-                log.LogInformation($"{nameof(ProcessSegmentRefresEventAsync)}: Segment: {refreshPayload.Segment} of job profile: '{refreshPayload.CanonicalName} - {refreshPayload.JobProfileId}' updated.");
+                log.LogInformation($"{nameof(ProcessSegmentRefreshEventAsync)}: Segment: {refreshPayload.Segment} of job profile: '{refreshPayload.CanonicalName} - {refreshPayload.JobProfileId}' updated.");
             }
             else
             {
-                log.LogWarning($"{nameof(ProcessSegmentRefresEventAsync)}: Segment: {refreshPayload.Segment} of job profile: '{refreshPayload.CanonicalName} - {refreshPayload.JobProfileId}' NOT updated : Status: {result}");
+                log.LogWarning($"{nameof(ProcessSegmentRefreshEventAsync)}: Segment: {refreshPayload.Segment} of job profile: '{refreshPayload.CanonicalName} - {refreshPayload.JobProfileId}' NOT updated : Status: {result}");
             }
 
             return result;
