@@ -103,13 +103,13 @@
             "type": "string"
         },
         "apimCompositeApiKey": {
-            "type": "securestring"
+            "type": "string"
         },
         "apimProxyAddress": {
             "type": "string"
         },
         "apimContentApiKey": {
-            "type": "securestring"
+            "type": "string"
         }
     },
     "variables": {
