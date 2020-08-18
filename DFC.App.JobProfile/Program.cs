@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore;
+﻿using DFC.Compui.Telemetry.HostExtensions;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.ApplicationInsights;
 using System.Diagnostics.CodeAnalysis;
 
 namespace DFC.App.JobProfile
@@ -9,13 +12,18 @@ namespace DFC.App.JobProfile
     {
         public static void Main(string[] args)
         {
-            CreateWebHostBuilder(args).Build().Run();
+            var webHost = CreateWebHostBuilder(args);
+            webHost.Build().AddApplicationTelemetryInitializer().Run();
         }
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args)
-        {
-            return WebHost.CreateDefaultBuilder(args)
-                          .UseStartup<Startup>();
-        }
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+            WebHost.CreateDefaultBuilder(args)
+                .UseApplicationInsights()
+                .ConfigureLogging((webHostBuilderContext, loggingBuilder) =>
+                {
+                    // This filter is for app insights only
+                    loggingBuilder.AddFilter<ApplicationInsightsLoggerProvider>(string.Empty, LogLevel.Trace);
+                })
+                .UseStartup<Startup>();
     }
 }

@@ -1,5 +1,4 @@
-﻿using DFC.App.JobProfile.ClientHandlers;
-using DFC.App.JobProfile.Data.HttpClientPolicies;
+﻿using DFC.App.JobProfile.Data.HttpClientPolicies;
 using DFC.App.JobProfile.HttpClientPolicies;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -69,7 +68,6 @@ namespace DFC.App.JobProfile.Extensions
                         })
                         .AddPolicyHandlerFromRegistry($"{configurationSectionName}_{retryPolicyName}")
                         .AddPolicyHandlerFromRegistry($"{configurationSectionName}_{circuitBreakerPolicyName}")
-                        .AddHttpMessageHandler<CorrelationIdDelegatingHandler>()
                         .Services;
     }
 }

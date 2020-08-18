@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
-using CorrelationId;
 using DFC.App.JobProfile.ApiProcessorService;
 using DFC.App.JobProfile.CacheContentService;
-using DFC.App.JobProfile.ClientHandlers;
 using DFC.App.JobProfile.CmsApiProcessorService;
 using DFC.App.JobProfile.Data.Contracts;
 using DFC.App.JobProfile.Data.Contracts.SegmentServices;
@@ -53,13 +51,6 @@ namespace DFC.App.JobProfile
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public static void Configure(IApplicationBuilder app, IWebHostEnvironment env, IMapper mapper)
         {
-            app.UseCorrelationId(new CorrelationIdOptions
-            {
-                Header = "DssCorrelationId",
-                UseGuidForCorrelationId = true,
-                UpdateTraceIdentifier = false,
-            });
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -105,7 +96,6 @@ namespace DFC.App.JobProfile
         {
             services.AddApplicationInsightsTelemetry();
             services.AddAutoMapper(typeof(Startup).Assembly);
-            services.AddCorrelationId();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
             services.Configure<CookiePolicyOptions>(options =>
@@ -132,7 +122,6 @@ namespace DFC.App.JobProfile
 
             services.AddScoped<IJobProfileService, JobProfileService>();
             services.AddScoped<ISegmentService, SegmentService>();
-            services.AddTransient<CorrelationIdDelegatingHandler>();
             services.AddDFCLogging(configuration["ApplicationInsights:InstrumentationKey"]);
 
             services.AddSingleton(configuration.GetSection(nameof(CareerPathSegmentClientOptions)).Get<CareerPathSegmentClientOptions>());
