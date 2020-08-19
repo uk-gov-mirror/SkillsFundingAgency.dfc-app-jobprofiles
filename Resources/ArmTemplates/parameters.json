@@ -72,13 +72,13 @@
             "value": "__EventGridSubscriptionClientOptionsEndpoint__"
         },
         "apimCompositeApiKey": {
-            "value": "__apimCompositeApiKey__"
+            "value": "__ApimCompositeKey"
         },
         "apimProxyAddress": {
             "value": "__apimProxyAddress__"
         },
         "apimContentApiKey": {
-            "value": "__apimContentApiKey__"
+            "value": "__ApimContentKey__"
         }
     }
 }
