@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 
@@ -12,6 +13,8 @@ namespace DFC.App.JobProfile.Data.Models.ServiceBusModels
 
         [Required]
         public string CanonicalName { get; set; }
+
+        public IList<string> AlternativeNames { get; set; }
 
         [Required]
         public string SocLevelTwo { get; set; }
