@@ -551,7 +551,7 @@
                             },
                             {
                                 "name": "CmsApiClientOptions__StaticContentEndpoint",
-                                "value": "api/execute/shared-content/"
+                                "value": "api/execute/sharedcontent/"
                             },
                             {
                                 "name": "CmsApiClientOptions__ContentIds",
